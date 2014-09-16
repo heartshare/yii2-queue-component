@@ -145,12 +145,14 @@ abstract class Queue extends Component
      * @return mixed
      */
 
-    public function setTimeout($msgId = null, $timeout)
+    public function setTimeout($timeout, $msgId = null)
     {
         if ($msgId === null) {
             $msgId = $this->getTmpMessageId();
         }
-        return $this->setVisibilityTimeout($msgId, $timeout);
+        $result = $this->setVisibilityTimeout($msgId, $timeout);
+        $this->setTmpMessageId($result['msgId']);
+        return $result;
     }
 
     /**
